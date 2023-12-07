@@ -10,18 +10,17 @@ public class Printer extends Thread {
         this.nextThread = nextThread;
     }
 
-    @Override
+
     public void run() {
-        try {
-            for (int i = 0; i < 10; i++){
-                System.out.println(String.valueOf(number).repeat(10));
+        for (int i = 0; i < 10; i++) {
+            try {
                 Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println(String.valueOf(number).repeat(10));
+                if (nextThread != null) {
+                    nextThread.interrupt();
+                }
             }
-            if (nextThread != null) {
-                nextThread.interrupt();
-            }
-        } catch (InterruptedException e) {
-            System.out.println("Thread interrupted: " + e);
         }
     }
 }
